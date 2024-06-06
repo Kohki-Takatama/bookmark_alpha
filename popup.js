@@ -10,16 +10,42 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (query) {
       chrome.bookmarks.search(query, function (bookmarks) {
+        console.log(bookmarks);
         resultsList.innerHTML = '';
-        currentFocus = -1; // Reset the current focus
+        currentFocus = 0; // Reset the current focus
 
         bookmarks.forEach(function (bookmark, index) {
           const li = document.createElement('li');
-          li.textContent = bookmark.title + ' - ' + bookmark.url;
           li.tabIndex = index;
+          if (index === 0) {
+            li.classList.add('active');
+          }
+
+          let domain;
+          try {
+            domain = new URL(bookmark.url).hostname;
+          } catch (e) {
+            domain = null;
+          }
+          const icon = document.createElement('img');
+          icon.src = `https://www.google.com/s2/favicons?domain=${domain}`;
+          icon.style.width = '12px';
+          icon.style.height = '12px';
+          icon.style.marginRight = '2px';
+
+          const title = document.createElement('span');
+          title.textContent = bookmark.title;
+          title.classList.add('title');
+          const url = document.createElement('p');
+          url.textContent = ' - ' + bookmark.url;
+          url.classList.add('url');
+
+          li.append(icon, title, url);
+
           li.addEventListener('click', function () {
             chrome.tabs.create({ url: bookmark.url });
           });
+
           resultsList.appendChild(li);
         });
       });
