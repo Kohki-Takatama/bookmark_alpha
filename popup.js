@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const searchInput = document.getElementById('search');
   const resultsList = document.getElementById('results');
 
-  let currentFocus = -1;
+  let currentFocus = 0;
 
   // 検索と候補表示
   searchInput.addEventListener('input', function () {
@@ -33,16 +33,28 @@ document.addEventListener('DOMContentLoaded', function () {
     const items = resultsList.getElementsByTagName('li');
 
     if (e.key === 'ArrowDown') {
-      currentFocus++;
-      if (currentFocus >= items.length) currentFocus = 0;
+      e.preventDefault();
+      e.stopPropagation();
+      currentFocus++; // 基本は下に下に
+      if (currentFocus >= items.length) currentFocus = 0; // 一番下までいったらスクロール
       addActive(items);
     } else if (e.key === 'ArrowUp') {
-      currentFocus--;
+      e.preventDefault();
+      e.stopPropagation();
+      if (currentFocus > 0) {
+        currentFocus--; // 基本は上に上に
+      } else {
+        currentFocus = 0; // 初めての矢印操作の場合は、上キーであっても一番最初の要素にフォーカス
+        window.scroll({
+          top: 0,
+          behavior: 'smooth',
+        }); // かつ、要素が見えなくならないようトップへスクロール
+      }
       if (currentFocus < 0) currentFocus = items.length - 1;
       addActive(items);
     } else if (e.key === 'Enter') {
       e.preventDefault();
-      if (currentFocus > -1) {
+      if (currentFocus >= 0) {
         if (items) {
           items[currentFocus].click();
         }
