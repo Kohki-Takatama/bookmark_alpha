@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Bookmark Search Extension",
+  "name": "ブックマーク検索・ショートカット",
   "version": "1.0",
   "permissions": ["bookmarks", "activeTab"],
   "commands": {
