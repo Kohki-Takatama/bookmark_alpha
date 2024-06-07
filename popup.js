@@ -2,24 +2,21 @@ document.addEventListener('DOMContentLoaded', function () {
   const searchInput = document.getElementById('search');
   const resultsList = document.getElementById('results');
 
-  let currentFocus = 0;
+  let currentFocus = -1;
 
   // 検索と候補表示
   searchInput.addEventListener('input', function () {
     const query = searchInput.value.toLowerCase();
 
     if (query) {
+      resultsList.innerHTML = '';
+      currentFocus = -1; // Reset the current focus
       chrome.bookmarks.search(query, function (bookmarks) {
-        resultsList.innerHTML = '';
-        currentFocus = 0; // Reset the current focus
-
         bookmarks.forEach(async function (bookmark, index) {
           if (!bookmark.url) return;
+
           const li = document.createElement('li');
           li.tabIndex = index;
-          if (index === 0) {
-            li.classList.add('active');
-          }
 
           const icon = document.createElement('img');
           icon.src = `https://www.google.com/s2/favicons?domain=${bookmark.url}`;
