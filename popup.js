@@ -32,14 +32,20 @@ document.addEventListener('DOMContentLoaded', function () {
           const parent = document.createElement('span');
           parent.textContent = bookmark_parent ? bookmark_parent[0].title + ' / ' : '';
           parent.classList.add('parent');
+
           const title = document.createElement('span');
           title.textContent = bookmark.title;
           title.classList.add('title');
+
+          const badge = document.createElement('span');
+          badge.textContent = 'ブックマーク';
+          badge.classList.add('badge');
+
           const url = document.createElement('p');
           url.textContent = ' - ' + bookmark.url;
           url.classList.add('url');
 
-          li.append(icon, parent, title, url);
+          li.append(icon, parent, title, badge, url);
 
           li.addEventListener('click', function () {
             chrome.tabs.create({ url: bookmark.url });

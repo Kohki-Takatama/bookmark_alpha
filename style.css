@@ -21,6 +21,10 @@ body {
   color: lightcoral;
   font-size: smaller;
 }
+.tab-parent {
+  color: lightskyblue;
+  font-size: smaller;
+}
 .url {
   color: gray;
   font-size: smaller;
@@ -32,4 +36,41 @@ input {
   width: 100%;
   box-sizing: border-box;
   padding: 5px 10px;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  width: fit-content;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  border-radius: 9999px; /* Fully rounded corners */
+  border-width: 1px;
+  border-color: var(--badge-border-color, #e5e7eb); /* Default border color */
+  background-color: var(--badge-bg-color, #f3f4f6); /* Default background color */
+  color: var(--badge-text-color, #374151); /* Default text color */
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.badge-primary {
+  --badge-bg-color: #3b82f6; /* Primary background color */
+  --badge-text-color: #ffffff; /* Primary text color */
+  --badge-border-color: #3b82f6; /* Primary border color */
+}
+
+.badge-secondary {
+  --badge-bg-color: #6b7280; /* Secondary background color */
+  --badge-text-color: #ffffff; /* Secondary text color */
+  --badge-border-color: #6b7280; /* Secondary border color */
+}
+
+.badge-accent {
+  --badge-bg-color: #f97316; /* Accent background color */
+  --badge-text-color: #ffffff; /* Accent text color */
+  --badge-border-color: #f97316; /* Accent border color */
 }
