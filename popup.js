@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (query) {
       chrome.bookmarks.search(query, function (bookmarks) {
-        console.log(bookmarks);
         resultsList.innerHTML = '';
         currentFocus = 0; // Reset the current focus
 
