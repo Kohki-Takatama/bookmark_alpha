@@ -21,14 +21,8 @@ document.addEventListener('DOMContentLoaded', function () {
             li.classList.add('active');
           }
 
-          let domain;
-          try {
-            domain = new URL(bookmark.url).hostname;
-          } catch (e) {
-            domain = null;
-          }
           const icon = document.createElement('img');
-          icon.src = `https://www.google.com/s2/favicons?domain=${domain}`;
+          icon.src = `https://www.google.com/s2/favicons?domain=${bookmark.url}`;
           icon.style.width = '12px';
           icon.style.height = '12px';
           icon.style.marginRight = '2px';
