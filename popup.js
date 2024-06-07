@@ -45,7 +45,53 @@ document.addEventListener('DOMContentLoaded', function () {
             chrome.tabs.create({ url: bookmark.url });
           });
 
-          resultsList.appendChild(li);
+          resultsList.append(li);
+        });
+      });
+
+      // 既存タブの検索
+      chrome.tabs.query({}, (tabs) => {
+        const regex = new RegExp(`.*${query}.*`, 'i');
+        tabs.forEach(async (tab) => {
+          if (tab.title.match(regex) || tab.url.match(regex)) {
+            const li = document.createElement('li');
+
+            const icon = document.createElement('img');
+            icon.src = `https://www.google.com/s2/favicons?domain=${tab.url}`;
+            icon.style.width = '12px';
+            icon.style.height = '12px';
+            icon.style.marginRight = '2px';
+
+            const tab_parent = tab.groupId !== -1 ? await chrome.tabGroups.get(tab.groupId) : '';
+
+            const parent = document.createElement('span');
+            parent.textContent = tab_parent ? tab_parent.title + ' / ' : '';
+            parent.classList.add('tab-parent');
+
+            const title = document.createElement('span');
+            title.textContent = tab.title;
+            title.classList.add('title');
+
+            const badge = document.createElement('span');
+            badge.textContent = '既存タブ';
+            badge.classList.add('badge');
+
+            const url = document.createElement('p');
+            url.textContent = ' - ' + tab.url;
+            url.classList.add('url');
+
+            li.append(icon, parent, title, badge, url);
+
+            li.addEventListener('click', async function () {
+              await chrome.tabs.highlight({ tabs: tab.index, windowId: tab.windowId });
+              await chrome.windows.update(tab.windowId, { focused: true });
+              await chrome.tabs.update(tab.id, { active: true });
+
+              window.close();
+            });
+
+            resultsList.prepend(li);
+          }
         });
       });
     } else {
