@@ -63,6 +63,23 @@ document.addEventListener('DOMContentLoaded', function () {
   searchInput.addEventListener('keydown', function (e) {
     const items = resultsList.getElementsByTagName('li');
 
+    // parts: 適切なliアイテムに.activeを付与
+    function addActive(items) {
+      if (!items) return false;
+      removeActive(items);
+      if (currentFocus >= items.length) currentFocus = 0;
+      if (currentFocus < 0) currentFocus = items.length - 1;
+      items[currentFocus].classList.add('active');
+      items[currentFocus].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // parts: すべてのliアイテムから.activeを削除
+    function removeActive(items) {
+      for (let i = 0; i < items.length; i++) {
+        items[i].classList.remove('active');
+      }
+    }
+
     if (e.key === 'ArrowDown') {
       e.preventDefault();
       e.stopPropagation();
@@ -92,21 +109,4 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
   });
-
-  // parts: 適切なliアイテムに.activeを付与
-  function addActive(items) {
-    if (!items) return false;
-    removeActive(items);
-    if (currentFocus >= items.length) currentFocus = 0;
-    if (currentFocus < 0) currentFocus = items.length - 1;
-    items[currentFocus].classList.add('active');
-    items[currentFocus].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
-
-  // parts: すべてのliアイテムから.activeを削除
-  function removeActive(items) {
-    for (let i = 0; i < items.length; i++) {
-      items[i].classList.remove('active');
-    }
-  }
 });
