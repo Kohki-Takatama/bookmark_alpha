@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', function () {
         resultsList.innerHTML = '';
         currentFocus = 0; // Reset the current focus
 
-        bookmarks.forEach(function (bookmark, index) {
+        bookmarks.forEach(async function (bookmark, index) {
+          if (!bookmark.url) return;
           const li = document.createElement('li');
           li.tabIndex = index;
           if (index === 0) {
@@ -32,6 +33,11 @@ document.addEventListener('DOMContentLoaded', function () {
           icon.style.height = '12px';
           icon.style.marginRight = '2px';
 
+          const bookmark_parent = await chrome.bookmarks.get(bookmark.parentId);
+
+          const parent = document.createElement('span');
+          parent.textContent = bookmark_parent ? bookmark_parent[0].title + ' / ' : '';
+          parent.classList.add('parent');
           const title = document.createElement('span');
           title.textContent = bookmark.title;
           title.classList.add('title');
@@ -39,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
           url.textContent = ' - ' + bookmark.url;
           url.classList.add('url');
 
-          li.append(icon, title, url);
+          li.append(icon, parent, title, url);
 
           li.addEventListener('click', function () {
             chrome.tabs.create({ url: bookmark.url });

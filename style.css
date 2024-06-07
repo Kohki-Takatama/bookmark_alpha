@@ -17,9 +17,13 @@ li {
 body {
   min-width: 100px;
 }
+.parent {
+  color: lightcoral;
+  font-size: smaller;
+}
 .url {
   color: gray;
-  font-size: small;
+  font-size: smaller;
 }
 input {
   position: fixed;
