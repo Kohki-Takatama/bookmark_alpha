@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "ブックマーク検索・ショートカット",
   "version": "1.0",
-  "permissions": ["bookmarks", "activeTab", "tabs", "tabGroups"],
+  "permissions": ["bookmarks", "tabs"],
   "commands": {
     "_execute_action": {
       "suggested_key": {
@@ -10,6 +10,11 @@
         "mac": "MacCtrl+Space"
       }
     }
+  },
+  "icons": {
+    "16": "icon/icon16.png",
+    "48": "icon/icon48.png",
+    "128": "icon/icon128.png"
   },
   "action": {
     "default_popup": "popup.html"
